@@ -13,7 +13,6 @@ require "states/PlayState"
 require "states/ServeState"
 require "states/DoneState"
 
-deltatime = 0.0
 WINDOW_RES = {
     WIDTH = 1280,
     HEIGHT = 1280 / 16 * 9
@@ -31,10 +30,12 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.window.setTitle("Lua Game <3")
 
+    debug_info = false
+
     math.randomseed(os.time())
 
     player1 = Player(5, math.floor(VIRTUAL_RES.HEIGHT / 2), 5, 20)
-    player2 = Player(VIRTUAL_RES.WIDTH - 10, math.floor(VIRTUAL_RES.HEIGHT / 2), 5, 20, 8)
+    player2 = Player(VIRTUAL_RES.WIDTH - 10, math.floor(VIRTUAL_RES.HEIGHT / 2), 5, 20)
     ball = Ball(VIRTUAL_RES.WIDTH / 2 - 2, VIRTUAL_RES.HEIGHT / 2 - 2, 4, 4)
 
     smallFont = love.graphics.newFont("font.ttf", 8)
@@ -53,6 +54,7 @@ function love.load()
             vsync = true
         }
     )
+
     gStateMachine =
         StateMachine {
         ["start"] = function()
@@ -80,6 +82,8 @@ end
 function love.keypressed(key)
     if key == "escape" then
         love.event.quit()
+    elseif key == "f1" then
+        debug_info = not debug_info
     end
 end
 
@@ -117,7 +121,9 @@ function love.draw()
     player2:render()
     ball:render()
 
-    displayDebugInfo()
+    if debug_info then
+        displayDebugInfo()
+    end
 
     push:apply("end")
 end
