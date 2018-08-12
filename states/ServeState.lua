@@ -3,19 +3,18 @@ ServeState = Class {__includes = BaseState}
 function ServeState:init()
     ball:reset()
     print "init Serve"
-end
-
-function ServeState:update(dt)
-    if love.keyboard.isDown("kpenter") or love.keyboard.isDown("return") then
-        gameState = "play"
-        gStateMachine:change("play")
-    end
-
     ball.dy = math.random(-50, 50)
     if servingPlayer == 1 then
         ball.dx = -math.random(140, 200)
     elseif servingPlayer == 2 then
         ball.dx = math.random(140, 200)
+    end
+end
+
+function ServeState:update(dt)
+    if love.keyboard.wasPressed("return") or love.keyboard.wasPressed("kpenter") then
+        gameState = "play"
+        gStateMachine:change("play")
     end
 end
 

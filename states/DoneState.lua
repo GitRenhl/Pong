@@ -5,7 +5,7 @@ function DoneState:init()
 end
 
 function DoneState:update(dt)
-    if love.keyboard.isDown("kpenter") or love.keyboard.isDown("return") then
+    if love.keyboard.wasPressed("return") or love.keyboard.wasPressed("kpenter") then
         print("RESET")
         gStateMachine:change("serve")
         if winningPlayer == 1 then

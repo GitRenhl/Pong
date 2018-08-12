@@ -5,7 +5,7 @@ function StartState:init()
 end
 
 function StartState:update(dt)
-    if love.keyboard.isDown("kpenter") or love.keyboard.isDown("return") then
+    if love.keyboard.wasPressed("return") or love.keyboard.wasPressed("kpenter") then
         gameState = "serve"
         gStateMachine:change("serve")
     end
